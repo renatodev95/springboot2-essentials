@@ -18,7 +18,7 @@ import java.util.List;
 @RequestMapping(path = "/animes")
 @RequiredArgsConstructor
 @Log4j2
-public class AnimeController {
+public class  AnimeController {
 
     private final DateUtil dateUtil;
     private final AnimeService animeService;
