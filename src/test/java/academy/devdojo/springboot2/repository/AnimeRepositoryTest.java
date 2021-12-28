@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
+import javax.validation.ConstraintViolationException;
 import java.util.List;
 import java.util.Optional;
 
@@ -72,6 +73,18 @@ class AnimeRepositoryTest {
     void findByName_ReturnsEmptyListOfAnime_WhenAnimeIsNotFound() {
         List<Anime> animes = animeRepository.findByName("empty");
         Assertions.assertThat(animes).isEmpty();
+    }
+
+    @Test
+    @DisplayName("Save throw ConstraintValidationException when the anime name is empty")
+    void save_ThrowConstraintValidationException_WhenTheAnimeNameIsEmpty() {
+        Anime anime = Anime.builder().name(null).build();
+
+//        Assertions.assertThatThrownBy(() -> animeRepository.save(anime))
+//                .isInstanceOf(ConstraintViolationException.class);
+        Assertions.assertThatExceptionOfType(ConstraintViolationException.class)
+                .isThrownBy(() -> animeRepository.save(anime))
+                .withMessageContaining("The anime name cannot be empty");
     }
 
     private Anime createAnime() {
