@@ -11,7 +11,7 @@
 
     <groupId>academy.devdojo</groupId>
     <artifactId>springboot2-essentials</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.2-SNAPSHOT</version>
     <name>springboot2-essentials</name>
     <description>Curso Spring Boot DevDojo</description>
     <properties>
@@ -21,7 +21,7 @@
         <jib-maven-plugin.version>3.1.4</jib-maven-plugin.version>
         <docker.distroless.image>adoptopenjdk:11-jre</docker.distroless.image>
         <jib-maven-plugin.version>3.0.0</jib-maven-plugin.version>
-        <docker.repo.url>docker.io/renatodev95</docker.repo.url>
+        <docker.repo.url>renatodev95</docker.repo.url>
         <repo.project>springboot2-essentials</repo.project>
         <docker.image.name>${docker.repo.url}/${repo.project}</docker.image.name>
     </properties>
