@@ -18,6 +18,12 @@
         <java.version>1.8</java.version>
         <org.mapstruct.version>1.4.2.Final</org.mapstruct.version>
         <springdoc-openapi-ui.version>1.6.3</springdoc-openapi-ui.version>
+        <jib-maven-plugin.version>3.1.4</jib-maven-plugin.version>
+        <docker.distroless.image>adoptopenjdk:11-jre</docker.distroless.image>
+        <jib-maven-plugin.version>3.0.0</jib-maven-plugin.version>
+        <docker.repo.url>docker.io/renatodev95</docker.repo.url>
+        <repo.project>springboot2-essentials</repo.project>
+        <docker.image.name>${docker.repo.url}/${repo.project}</docker.image.name>
     </properties>
 
     <dependencies>
@@ -135,6 +141,25 @@
 
     <build>
         <plugins>
+            <plugin>
+                <groupId>com.google.cloud.tools</groupId>
+                <artifactId>jib-maven-plugin</artifactId>
+                <version>${jib-maven-plugin.version}</version>
+                <configuration>
+                    <from>
+                        <image>${docker.distroless.image}</image>
+                    </from>
+                    <to>
+                        <image>${docker.image.name}</image>
+                        <tags>
+                            <tag>${project.version}</tag>
+                        </tags>
+                    </to>
+                    <container>
+                        <mainClass>academy.devdojo.springboot2.Springboot2EssentialsApplication</mainClass>
+                    </container>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
