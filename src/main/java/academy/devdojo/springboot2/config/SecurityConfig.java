@@ -4,19 +4,19 @@ import academy.devdojo.springboot2.service.DevDojoUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 @EnableWebSecurity
 @Log4j2
 @RequiredArgsConstructor
 @SuppressWarnings("java:S5344")
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    private static final String ACADEMY = "academy";
 
     private final DevDojoUserDetailsService devDojoUserDetailsService;
 
@@ -36,6 +36,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/animes/admin/**").hasRole("ADMIN")
                 .antMatchers("/animes/**").hasRole("USER")
+                .antMatchers("/actuator/** ").permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()
@@ -47,15 +48,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
-        log.info("Password encoded {}", passwordEncoder.encode("academy"));
+        log.info("Password encoded {}", passwordEncoder.encode(ACADEMY));
 
         auth.inMemoryAuthentication()
                 .withUser("renato2")
-                .password(passwordEncoder.encode("academy"))
+                .password(passwordEncoder.encode(ACADEMY))
                 .roles("USER", "ADMIN")
                 .and()
                 .withUser("devdojo2")
-                .password(passwordEncoder.encode("academy"))
+                .password(passwordEncoder.encode(ACADEMY))
                 .roles("USER");
 
         auth.userDetailsService(devDojoUserDetailsService)
